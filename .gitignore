@@ -30,6 +30,7 @@ datasets/*
 !datasets/.gitkeep
 models/*
 !models/.gitkeep
+results/*
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

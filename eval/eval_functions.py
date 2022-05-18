@@ -1,8 +1,9 @@
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
 
-def plot_confusion_matrix(cm, labels, title='Confusion matrix', cmap=plt.cm.Blues):
+def plot_confusion_matrix(cm, labels, title='Confusion matrix', cmap=plt.cm.Blues, save_path = None):
     #cm output from sklearn.confusion_matrix
     fig, ax = plt.subplots(figsize = (5,5))
     ax.imshow(cm, interpolation='nearest', cmap=cmap)
@@ -18,14 +19,27 @@ def plot_confusion_matrix(cm, labels, title='Confusion matrix', cmap=plt.cm.Blue
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-    plt.show()
+    if save_path == None:
+        plt.show()
+    else:
+        plt.savefig(save_path)
     
-def evaluate(y_truth, y_pred, labels): 
+def evaluate(y_truth, y_pred, labels, 
+        save_confusion_matrix_path = 'evaluation_results/sample.png', 
+        save_classification_report_path = 'evaluation_results/sample.csv'
+        ): 
     labels = [str(x) for x in labels]
+
     print('Classification Report')
-    print(classification_report(y_truth, y_pred,labels = [x for x in range(len(labels))], target_names=labels))
+    cls_report = classification_report(y_truth, y_pred,labels = [x for x in range(len(labels))], target_names=labels, output_dict=True)
+    if save_confusion_matrix_path == None:
+        print(cls_report)
+    else:
+        df = pd.DataFrame(cls_report).transpose()
+        df.to_csv(save_classification_report_path)
+
     print('Confusion Matrix')
-    plot_confusion_matrix(confusion_matrix(y_truth, y_pred, normalize = 'true'), labels = labels)
+    plot_confusion_matrix(confusion_matrix(y_truth, y_pred, normalize = 'true'), labels = labels, save_path = save_confusion_matrix_path)
 
 if __name__ == '__main__':
     y_test = [0,1,0]
