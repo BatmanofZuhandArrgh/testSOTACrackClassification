@@ -23,6 +23,12 @@ def plot_confusion_matrix(cm, labels, title='Confusion matrix', cmap=plt.cm.Blue
         plt.show()
     else:
         plt.savefig(save_path)
+
+def iou(target, prediction):
+    intersection = np.logical_and(target, prediction)
+    union = np.logical_or(target, prediction)
+    iou_score = np.sum(intersection) / np.sum(union)
+    return iou_score
     
 def evaluate(y_truth, y_pred, labels, 
         save_confusion_matrix_path = 'evaluation_results/sample.png', 
@@ -31,7 +37,7 @@ def evaluate(y_truth, y_pred, labels,
     labels = [str(x) for x in labels]
 
     print('Classification Report')
-    cls_report = classification_report(y_truth, y_pred,labels = [x for x in range(len(labels))], target_names=labels, output_dict=True)
+    cls_report = classification_report(y_truth, y_pred,labels = [x for x in range(len(labels))], target_names=labels)
     if save_classification_report_path != None:
         df = pd.DataFrame(cls_report).transpose()
         df.to_csv(save_classification_report_path)
