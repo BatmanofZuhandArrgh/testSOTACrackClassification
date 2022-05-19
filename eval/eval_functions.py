@@ -32,11 +32,10 @@ def evaluate(y_truth, y_pred, labels,
 
     print('Classification Report')
     cls_report = classification_report(y_truth, y_pred,labels = [x for x in range(len(labels))], target_names=labels, output_dict=True)
-    if save_confusion_matrix_path == None:
-        print(cls_report)
-    else:
+    if save_classification_report_path != None:
         df = pd.DataFrame(cls_report).transpose()
         df.to_csv(save_classification_report_path)
+    print(cls_report)
 
     print('Confusion Matrix')
     plot_confusion_matrix(confusion_matrix(y_truth, y_pred, normalize = 'true'), labels = labels, save_path = save_confusion_matrix_path)

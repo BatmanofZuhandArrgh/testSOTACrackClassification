@@ -60,15 +60,14 @@ class Eval_dataset:
                     lab = cv2.imread(self.paths['pred'][i][j])
                     assert lab.shape[:2] == pred.shape[:2]
 
-            
-    def evaluate(self):
+    def evaluate_segmentation2classification(self, pixcount_threshold, conf_score_threshold, f1_threshold):
         pass
 
 if __name__ == '__main__':
     dataset_names = [
         'AEL',
         'CFD',
-        'SDNET2018',
+        # 'SDNET2018',
         'CrackTree200',
         'CRACK500',
         'GAPs384'
@@ -76,7 +75,7 @@ if __name__ == '__main__':
     lab_data_roots = [
         'datasets/AEL/gt',
         'datasets/CFD/cfd_gt/seg_gt',
-        None,
+        # None,
         'datasets/CrackTree200/cracktree200_gt',
         'datasets/CRACK500/lab_img',
         'datasets/GAPs384/cropgt'
@@ -84,7 +83,7 @@ if __name__ == '__main__':
     pred_data_roots = [
         'results/AEL',
         'results/CFD',
-        'results/SDNET2018',
+        # 'results/SDNET2018',
         'results/CrackTree200',
         'results/CRACK500',
         'results/GAPs384',
@@ -92,7 +91,7 @@ if __name__ == '__main__':
     img_data_roots = [
         'datasets/AEL/test_img',
         'datasets/CFD/test_img',
-        'datasets/DATA_Maguire_20180517_ALL/test_img',
+        # 'datasets/DATA_Maguire_20180517_ALL/test_img',
         'datasets/CrackTree200/test_img',
         'datasets/CRACK500/test_img'
         'datasets/GAPs384/test_img'
