@@ -147,7 +147,7 @@ if __name__ == '__main__':
         # 'CFD',
         # # 'SDNET2018',
         # 'CrackTree200',
-        'CRACK500',
+        # 'CRACK500',
         'GAPs384'
     ]
     lab_data_roots = [
@@ -155,7 +155,7 @@ if __name__ == '__main__':
         # 'datasets/CFD/cfd_gt',
         # # None,
         # 'datasets/CrackTree200/cracktree200_gt',
-        'datasets/CRACK500/test_img',
+        # 'datasets/CRACK500/test_img',
         'datasets/GAPs384/croppedgt'
     ]
     pred_data_roots = [
@@ -163,7 +163,7 @@ if __name__ == '__main__':
         # 'results/CFD',
         # # 'results/SDNET2018',
         # 'results/CrackTree200',
-        'results/CRACK500',
+        # 'results/CRACK500',
         'results/GAPs384',
     ]
     img_data_roots = [
@@ -171,7 +171,7 @@ if __name__ == '__main__':
         # 'datasets/CFD/test_img',
         # # 'datasets/DATA_Maguire_20180517_ALL/test_img',
         # 'datasets/CrackTree200/test_img',
-        'datasets/CRACK500/test_img',
+        # 'datasets/CRACK500/test_img',
         'datasets/GAPs384/test_img'
     ]
     evalDataset = Eval_dataset(
