@@ -70,7 +70,8 @@ class Eval_dataset:
     def evaluate_segmentation(
         self, 
         fig_save_path = 'evaluation_results/segmentation_results.png', 
-        conf_score_threshold = 0.5
+        conf_score_threshold = 0.5,
+        binary_switch = False
         ):
         for key in self.paths.keys():
             print(key, [len(x) for x in self.paths[key]])
@@ -95,6 +96,9 @@ class Eval_dataset:
                 pred = binary_thresholding(pred, conf_score_threshold * 255)           
                 if 255 in np.unique(label):
                     label = binary_thresholding(label, conf_score_threshold * 255)
+                
+                if binary_switch:
+                    label = [1-x for x in label]
 
                 individual_iou = iou(target = label, prediction = pred)
 
@@ -143,36 +147,36 @@ class Eval_dataset:
 
 if __name__ == '__main__':
     dataset_names = [
-        # 'AEL',
+        'AEL',
         # 'CFD',
         # # 'SDNET2018',
         # 'CrackTree200',
         # 'CRACK500',
-        'GAPs384'
+        # 'GAPs384'
     ]
     lab_data_roots = [
-        # 'datasets/AEL/gt',
+        'datasets/AEL/gt',
         # 'datasets/CFD/cfd_gt',
         # # None,
         # 'datasets/CrackTree200/cracktree200_gt',
         # 'datasets/CRACK500/test_img',
-        'datasets/GAPs384/croppedgt'
+        # 'datasets/GAPs384/croppedgt'
     ]
     pred_data_roots = [
-        # 'results/AEL',
+        'results/AEL',
         # 'results/CFD',
         # # 'results/SDNET2018',
         # 'results/CrackTree200',
         # 'results/CRACK500',
-        'results/GAPs384',
+        # 'results/GAPs384',
     ]
     img_data_roots = [
-        # 'datasets/AEL/test_img',
+        'datasets/AEL/test_img',
         # 'datasets/CFD/test_img',
         # # 'datasets/DATA_Maguire_20180517_ALL/test_img',
         # 'datasets/CrackTree200/test_img',
         # 'datasets/CRACK500/test_img',
-        'datasets/GAPs384/test_img'
+        # 'datasets/GAPs384/test_img'
     ]
     evalDataset = Eval_dataset(
         dataset_names = dataset_names,
@@ -182,4 +186,5 @@ if __name__ == '__main__':
     )
 
     # evalDataset.evaluate_segmentation2classification(conf_score_threshold=0.5)
-    evalDataset.evaluate_segmentation(conf_score_threshold=0.2)
+    evalDataset.evaluate_segmentation(conf_score_threshold=0.2, binary_switch=True)
+    #For AEL, the binary label is switched (0 for cracked, 1 for non-cracked, thus binary_switch = true)
